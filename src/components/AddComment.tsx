@@ -45,12 +45,6 @@ const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
       <div className="flex justify-between items-center space-y-2">
         <img className="w-10" src={currentUser.image.webp} alt="" />
         <SendButton sendCommentHandler={sendCommentHandler} />
-        {/* <button
-          className="bg-primary-blue-400 text-white font-medium px-7 py-2 rounded-md"
-          onClick={sendCommentHandler}
-        >
-          SEND
-        </button> */}
       </div>
     </>
   );

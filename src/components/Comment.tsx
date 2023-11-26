@@ -1,4 +1,5 @@
-import { commentType, userType } from '../types/types';
+import { commentType, userType, replyType } from '../types/types';
+import DeleteCommentModal from './DeleteCommentModel';
 import EditCommentModal from './EditCommentModal';
 import Reply from './Reply';
 import { useState } from 'react';
@@ -6,18 +7,20 @@ import { useState } from 'react';
 type commentPropsType = {
   comment: commentType;
   currentUser: userType;
-  setisDeleteCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setcomments: React.Dispatch<React.SetStateAction<commentType[]>>;
 };
 
-const Comment = ({
-  comment,
-  currentUser,
-  setisDeleteCommentModalShown,
-}: commentPropsType) => {
+const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
+  const [replies, setReplies] = useState<replyType[] | undefined>(
+    comment.replies
+  );
+  const [isDeleteCommentModalShown, setisDeleteCommentModalShown] =
+    useState(false);
   const [isEditCommentModalShown, setisEditCommentModalShown] = useState(false);
 
   const deleteCommentHandler = () => {
     setisDeleteCommentModalShown(true);
+    console.log(comment.id);
   };
 
   return (
@@ -81,12 +84,12 @@ const Comment = ({
         )}
       </div>
 
-      {comment.replies?.length !== 0 ? (
+      {replies?.length !== 0 ? (
         <div className="space-y-2 border-l-2 pl-4">
-          {comment.replies?.map((reply) => (
+          {replies?.map((reply) => (
             <Reply
-              setisDeleteCommentModalShown={setisDeleteCommentModalShown}
               setisEditCommentModalShown={setisEditCommentModalShown}
+              setReplies={setReplies}
               currentUser={currentUser}
               reply={reply}
               key={reply.id}
@@ -102,6 +105,13 @@ const Comment = ({
         comment={comment}
         isEditCommentModalShown={isEditCommentModalShown}
         setisEditCommentModalShown={setisEditCommentModalShown}
+      />
+
+      <DeleteCommentModal
+        isDeleteCommentModalShown={isDeleteCommentModalShown}
+        setisDeleteCommentModalShown={setisDeleteCommentModalShown}
+        commentID={comment.id}
+        setcomments={setcomments}
       />
     </>
   );

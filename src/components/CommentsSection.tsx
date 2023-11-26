@@ -2,13 +2,11 @@ import { useState } from 'react';
 import data from '../assets/data.json';
 import Comment from './Comment';
 import AddComment from './AddComment';
-import DeleteCommentModal from './DeleteCommentModel';
+import { commentType } from '../types/types';
 
 const CommentsSection = () => {
   const [currentUser] = useState(data.currentUser);
-  const [comments, setcomments] = useState(data.comments);
-  const [isDeleteCommentModalShown, setisDeleteCommentModalShown] =
-    useState(false);
+  const [comments, setcomments] = useState<commentType[]>(data.comments);
 
   return (
     <>
@@ -18,7 +16,7 @@ const CommentsSection = () => {
             <Comment
               currentUser={currentUser}
               comment={comment}
-              setisDeleteCommentModalShown={setisDeleteCommentModalShown}
+              setcomments={setcomments}
               key={comment.id}
             />
           ))}
@@ -27,10 +25,6 @@ const CommentsSection = () => {
           <AddComment setComment={setcomments} currentUser={currentUser} />
         </div>
       </section>
-      <DeleteCommentModal
-        isDeleteCommentModalShown={isDeleteCommentModalShown}
-        setisDeleteCommentModalShown={setisDeleteCommentModalShown}
-      />
     </>
   );
 };

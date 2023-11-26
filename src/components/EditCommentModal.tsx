@@ -31,9 +31,10 @@ const EditCommentModal = ({
             <span className="text-neutral-blue-200">{comment.createdAt}</span>
           </div>
 
-          <textarea className="text-neutral-blue-200 col-span-2 resize-none p-4 border border-primary-blue-200 rounded-md">
-            {comment.content}
-          </textarea>
+          <textarea
+            defaultValue={comment.content}
+            className="text-neutral-blue-200 col-span-2 resize-none p-4 border border-primary-blue-200 rounded-md"
+          />
 
           <div className="flex items-center bg-neutral-grey-200 w-max px-4 py-2 rounded-md">
             <button onClick={() => setisEditCommentModalShown(false)}>
@@ -43,9 +44,6 @@ const EditCommentModal = ({
 
           <div className="flex items-center justify-end">
             <SendButton sendCommentHandler={sendCommentHandler} />
-            {/* <button className="flex items-center gap-2 font-bold-7">
-              <span className=" text-primary-blue-400">SEND</span>
-            </button> */}
           </div>
         </div>
       </div>

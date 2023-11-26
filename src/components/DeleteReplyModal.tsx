@@ -1,35 +1,34 @@
-import { commentType } from '../types/types';
+import { replyType } from '../types/types';
 
-type deleteCommentModalType = {
-  isDeleteCommentModalShown: boolean;
-  setisDeleteCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
-  commentID: number;
-  setcomments: React.Dispatch<React.SetStateAction<commentType[]>>;
+type deleteReplyModalType = {
+  isDeleteReplyModalShown: boolean;
+  setIsDeleteReplyModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setReplies: React.Dispatch<React.SetStateAction<replyType[] | undefined>>;
+  replyIdToDelete: number | undefined;
 };
 
-const DeleteCommentModal = ({
-  isDeleteCommentModalShown,
-  setisDeleteCommentModalShown,
-  commentID,
-  setcomments,
-}: deleteCommentModalType) => {
+const DeleteReplyModal = ({
+  setIsDeleteReplyModalShown,
+  isDeleteReplyModalShown,
+  replyIdToDelete,
+  setReplies,
+}: deleteReplyModalType) => {
   const cancelDeleteCommentHalndler = () => {
-    setisDeleteCommentModalShown(false);
+    setIsDeleteReplyModalShown(false);
   };
 
-  const deleteCommentHandler = () => {
-    setcomments((comments) =>
-      comments.filter((comment) => comment.id !== commentID)
+  const deleteReplyHandler = () => {
+    setReplies((replies) =>
+      replies?.filter((reply) => reply.id !== replyIdToDelete)
     );
 
-    setisDeleteCommentModalShown(false);
-    console.log(commentID);
+    setIsDeleteReplyModalShown(false);
   };
 
   return (
     <div
       className={`w-full h-full top-0 left-0 bg-black bg-opacity-40 fixed z-10  items-center justify-center ${
-        isDeleteCommentModalShown ? 'flex' : 'hidden'
+        isDeleteReplyModalShown ? 'flex' : 'hidden'
       }`}
     >
       <div className="bg-white w-11/12 px-8 py-4 rounded-md space-y-2">
@@ -46,7 +45,7 @@ const DeleteCommentModal = ({
             NO, CANCEL
           </button>
           <button
-            onClick={deleteCommentHandler}
+            onClick={deleteReplyHandler}
             className="bg-primary-red-400 px-4 py-2 rounded-md text-white font-medium text-sm"
           >
             YES, DELETE
@@ -57,4 +56,4 @@ const DeleteCommentModal = ({
   );
 };
 
-export default DeleteCommentModal;
+export default DeleteReplyModal;

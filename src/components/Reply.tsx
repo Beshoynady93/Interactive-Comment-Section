@@ -1,20 +1,24 @@
 import { replyType, userType } from '../types/types';
+import DeleteReplyModal from './DeleteReplyModal';
+import { useState } from 'react';
 
 type replyPropsType = {
   reply: replyType;
   currentUser: userType;
-  setisDeleteCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
   setisEditCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setReplies: React.Dispatch<React.SetStateAction<replyType[] | undefined>>;
 };
 
 const Reply = ({
   reply,
   currentUser,
-  setisDeleteCommentModalShown,
+  setReplies,
   setisEditCommentModalShown,
 }: replyPropsType) => {
+  const [isDeleteReplyModalShown, setIsDeleteReplyModalShown] = useState(false);
+
   const deleteCommentHandler = () => {
-    setisDeleteCommentModalShown(true);
+    setIsDeleteReplyModalShown(true);
   };
 
   return (
@@ -73,6 +77,13 @@ const Reply = ({
           </button>
         </div>
       )}
+
+      <DeleteReplyModal
+        replyIdToDelete={reply.id}
+        isDeleteReplyModalShown={isDeleteReplyModalShown}
+        setIsDeleteReplyModalShown={setIsDeleteReplyModalShown}
+        setReplies={setReplies}
+      />
     </div>
   );
 };
