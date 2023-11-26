@@ -4,12 +4,14 @@ type replyPropsType = {
   reply: replyType;
   currentUser: userType;
   setisDeleteCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setisEditCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Reply = ({
   reply,
   currentUser,
   setisDeleteCommentModalShown,
+  setisEditCommentModalShown,
 }: replyPropsType) => {
   const deleteCommentHandler = () => {
     setisDeleteCommentModalShown(true);
@@ -55,7 +57,10 @@ const Reply = ({
             <img src="./images/icon-delete.svg" alt="" />
             <span className="text-primary-red-400">Delete</span>
           </button>
-          <button className="flex items-center gap-2 font-bold-7">
+          <button
+            onClick={() => setisEditCommentModalShown(true)}
+            className="flex items-center gap-2 font-bold-7"
+          >
             <img src="./images/icon-edit.svg" alt="" />
             <span className="text-primary-blue-400">Edit</span>
           </button>

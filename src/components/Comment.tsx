@@ -1,5 +1,7 @@
 import { commentType, userType } from '../types/types';
+import EditCommentModal from './EditCommentModal';
 import Reply from './Reply';
+import { useState } from 'react';
 
 type commentPropsType = {
   comment: commentType;
@@ -12,6 +14,8 @@ const Comment = ({
   currentUser,
   setisDeleteCommentModalShown,
 }: commentPropsType) => {
+  const [isEditCommentModalShown, setisEditCommentModalShown] = useState(false);
+
   const deleteCommentHandler = () => {
     setisDeleteCommentModalShown(true);
   };
@@ -59,7 +63,10 @@ const Comment = ({
               <img src="./images/icon-delete.svg" alt="" />
               <span className="text-primary-red-400">Delete</span>
             </button>
-            <button className="flex items-center gap-2 font-bold-7">
+            <button
+              onClick={() => setisEditCommentModalShown(true)}
+              className="flex items-center gap-2 font-bold-7"
+            >
               <img src="./images/icon-edit.svg" alt="" />
               <span className="text-primary-blue-400">Edit</span>
             </button>
@@ -72,13 +79,6 @@ const Comment = ({
             </button>
           </div>
         )}
-
-        {/* <div className="flex items-center justify-end">
-        <button className="flex items-center gap-2 font-bold-7">
-          <img src="./images/icon-reply.svg" alt="" />
-          <span className=" text-primary-blue-400">Reply</span>
-        </button>
-      </div> */}
       </div>
 
       {comment.replies?.length !== 0 ? (
@@ -86,6 +86,7 @@ const Comment = ({
           {comment.replies?.map((reply) => (
             <Reply
               setisDeleteCommentModalShown={setisDeleteCommentModalShown}
+              setisEditCommentModalShown={setisEditCommentModalShown}
               currentUser={currentUser}
               reply={reply}
               key={reply.id}
@@ -95,6 +96,13 @@ const Comment = ({
       ) : (
         ''
       )}
+
+      <EditCommentModal
+        currentUser={currentUser}
+        comment={comment}
+        isEditCommentModalShown={isEditCommentModalShown}
+        setisEditCommentModalShown={setisEditCommentModalShown}
+      />
     </>
   );
 };

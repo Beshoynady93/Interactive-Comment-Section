@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { userType, commentType } from '../types/types';
+import SendButton from './buttons/SendButton';
 
 type addCommentPropsType = {
   currentUser: userType;
@@ -27,7 +28,7 @@ const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
         replies: [],
       },
     ]);
-    textareaRef.current.value = '';
+    // textareaRef.current.value = '';
   };
 
   return (
@@ -43,12 +44,13 @@ const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
       />
       <div className="flex justify-between items-center space-y-2">
         <img className="w-10" src={currentUser.image.webp} alt="" />
-        <button
+        <SendButton sendCommentHandler={sendCommentHandler} />
+        {/* <button
           className="bg-primary-blue-400 text-white font-medium px-7 py-2 rounded-md"
           onClick={sendCommentHandler}
         >
           SEND
-        </button>
+        </button> */}
       </div>
     </>
   );
