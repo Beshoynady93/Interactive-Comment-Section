@@ -1,46 +1,101 @@
 import { commentType, userType } from '../types/types';
 import Reply from './Reply';
 
-type commentProps = {
+type commentPropsType = {
   comment: commentType;
   currentUser: userType;
+  setisDeleteCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const Comment = ({ comment, currentUser }: commentProps) => {
+const Comment = ({
+  comment,
+  currentUser,
+  setisDeleteCommentModalShown,
+}: commentPropsType) => {
+  const deleteCommentHandler = () => {
+    setisDeleteCommentModalShown(true);
+  };
+
   return (
-    <div>
-      <div>
-        <img src={comment.user.image.webp} alt="" />
-        <span>{comment.user.username}</span>
-        {currentUser.username === comment.user.username ? <span>YOU</span> : ''}
-        <span>{comment.createdAt}</span>
-      </div>
-
-      <div>{comment.content}</div>
-
-      <div>
-        <button>
-          <img src="./images/icon-plus.svg" alt="" />
-        </button>
-        {comment.score}
-        <button>
-          <img src="./images/icon-minus.svg" alt="" />
-        </button>
-      </div>
-
-      <div>
-        <button>
-          <img src="./images/icon-reply.svg" alt="" />
-          <span>Reply</span>
-        </button>
-      </div>
-
-      {comment.replies?.map((reply) => (
-        <div key={reply.id}>
-          <Reply currentUser={currentUser} reply={reply} />
+    <>
+      <div className="bg-white p-4 rounded-md grid grid-cols-2 gap-y-4 shadow-sm">
+        <div className="flex gap-4 items-center col-span-2">
+          <img className="w-10" src={comment.user.image.webp} alt="" />
+          <span className="text-neutral-blue-400 font-bold-7">
+            {comment.user.username}
+          </span>
+          {currentUser.username === comment.user.username ? (
+            <span className="bg-primary-blue-400 text-white text-xs px-2 font-medium">
+              YOU
+            </span>
+          ) : (
+            ''
+          )}
+          <span className="text-neutral-blue-200">{comment.createdAt}</span>
         </div>
-      ))}
-    </div>
+
+        <div className="text-neutral-blue-200 col-span-2">
+          {comment.content}
+        </div>
+
+        <div className="flex items-center bg-neutral-grey-200 w-max px-4 py-2 rounded-md">
+          <button>
+            <img src="./images/icon-plus.svg" alt="" />
+          </button>
+          <span className="text-primary-blue-400 font-bold-7 mx-2">
+            {comment.score}
+          </span>
+          <button>
+            <img src="./images/icon-minus.svg" alt="" />
+          </button>
+        </div>
+
+        {comment.user.username === currentUser.username ? (
+          <div className="flex items-center gap-4">
+            <button
+              onClick={deleteCommentHandler}
+              className="flex items-center gap-2 font-bold-7"
+            >
+              <img src="./images/icon-delete.svg" alt="" />
+              <span className="text-primary-red-400">Delete</span>
+            </button>
+            <button className="flex items-center gap-2 font-bold-7">
+              <img src="./images/icon-edit.svg" alt="" />
+              <span className="text-primary-blue-400">Edit</span>
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-end">
+            <button className="flex items-center gap-2 font-bold-7">
+              <img src="./images/icon-reply.svg" alt="" />
+              <span className=" text-primary-blue-400">Reply</span>
+            </button>
+          </div>
+        )}
+
+        {/* <div className="flex items-center justify-end">
+        <button className="flex items-center gap-2 font-bold-7">
+          <img src="./images/icon-reply.svg" alt="" />
+          <span className=" text-primary-blue-400">Reply</span>
+        </button>
+      </div> */}
+      </div>
+
+      {comment.replies?.length !== 0 ? (
+        <div className="space-y-2 border-l-2 pl-4">
+          {comment.replies?.map((reply) => (
+            <Reply
+              setisDeleteCommentModalShown={setisDeleteCommentModalShown}
+              currentUser={currentUser}
+              reply={reply}
+              key={reply.id}
+            />
+          ))}
+        </div>
+      ) : (
+        ''
+      )}
+    </>
   );
 };
 
