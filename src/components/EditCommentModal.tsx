@@ -59,7 +59,6 @@ const EditCommentModal = ({
           </div>
 
           <textarea
-            defaultValue={comment.content}
             onChange={(e) => editedCommentTextHandler(e.target.value)}
             value={commentEditedText}
             className="text-neutral-blue-200 col-span-2 resize-none p-4 border border-primary-blue-200 rounded-md"
