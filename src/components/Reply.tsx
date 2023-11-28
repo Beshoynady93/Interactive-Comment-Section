@@ -1,21 +1,17 @@
 import { replyType, userType } from '../types/types';
 import DeleteReplyModal from './DeleteReplyModal';
 import { useState } from 'react';
+import EditReplyModal from './EditReplyModal';
 
 type replyPropsType = {
   reply: replyType;
   currentUser: userType;
-  setisEditCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
   setReplies: React.Dispatch<React.SetStateAction<replyType[] | undefined>>;
 };
 
-const Reply = ({
-  reply,
-  currentUser,
-  setReplies,
-  setisEditCommentModalShown,
-}: replyPropsType) => {
+const Reply = ({ reply, currentUser, setReplies }: replyPropsType) => {
   const [isDeleteReplyModalShown, setIsDeleteReplyModalShown] = useState(false);
+  const [isEditReplyModalShown, setIsEditReplyModalShown] = useState(false);
 
   const deleteCommentHandler = () => {
     setIsDeleteReplyModalShown(true);
@@ -62,7 +58,7 @@ const Reply = ({
             <span className="text-primary-red-400">Delete</span>
           </button>
           <button
-            onClick={() => setisEditCommentModalShown(true)}
+            onClick={() => setIsEditReplyModalShown(true)}
             className="flex items-center gap-2 font-bold-7"
           >
             <img src="./images/icon-edit.svg" alt="" />
@@ -83,6 +79,14 @@ const Reply = ({
         isDeleteReplyModalShown={isDeleteReplyModalShown}
         setIsDeleteReplyModalShown={setIsDeleteReplyModalShown}
         setReplies={setReplies}
+      />
+
+      <EditReplyModal
+        isEditReplyModalShown={isEditReplyModalShown}
+        setIsEditReplyModalShown={setIsEditReplyModalShown}
+        setReplies={setReplies}
+        reply={reply}
+        currentUser={currentUser}
       />
     </div>
   );
