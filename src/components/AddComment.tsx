@@ -41,7 +41,7 @@ const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
         // cols={30}
         rows={3}
         placeholder="Add a comment ..."
-        className="resize-none w-full p-4 border border-neutral-grey-400 text-neutral-blue-400 "
+        className="resize-none w-full p-4 border border-neutral-grey-400 text-neutral-blue-400"
       />
       <div className="flex justify-between items-center space-y-2">
         <img className="w-10" src={currentUser.image.webp} alt="" />

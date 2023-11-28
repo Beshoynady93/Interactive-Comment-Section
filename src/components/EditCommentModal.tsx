@@ -64,7 +64,7 @@ const EditCommentModal = ({
             className="text-neutral-blue-200 col-span-2 resize-none p-4 border border-primary-blue-200 rounded-md"
           />
 
-          <div className="flex items-center bg-neutral-grey-200 w-max px-4 py-2 rounded-md">
+          <div className="flex items-center bg-neutral-grey-200 w-max px-4 py-2 rounded-md hover:bg-slate-500 hover:text-white transition-colors duration-200">
             <button onClick={() => setisEditCommentModalShown(false)}>
               Close
             </button>
@@ -72,7 +72,7 @@ const EditCommentModal = ({
 
           <div className="flex items-center justify-end">
             <button
-              className="bg-primary-blue-400 text-white font-medium px-7 py-2 rounded-md"
+              className="bg-primary-blue-400 text-white font-medium px-7 py-2 rounded-md hover:opacity-50 transition-colors duration-200"
               onClick={() => sendCommentHandler(comment.id)}
             >
               UPDATE

@@ -47,7 +47,7 @@ const EditReplyModal = ({
         isEditReplyModalShown ? 'flex' : 'hidden'
       }`}
     >
-      <div className="bg-white w-11/12 px-8 py-4 rounded-md space-y-2">
+      <div className="bg-white w-11/12 px-2 rounded-md space-y-1">
         <div className="bg-white p-4 rounded-md grid grid-cols-2 gap-y-4 shadow-sm">
           <div className="flex gap-4 items-center col-span-2">
             <img className="w-10" src={currentUser.image.webp} alt="" />
@@ -58,13 +58,12 @@ const EditReplyModal = ({
           </div>
 
           <textarea
-            defaultValue={reply.content}
             onChange={(e) => editedReplyTextHandler(e.target.value)}
             value={replyEditedText}
             className="text-neutral-blue-200 col-span-2 resize-none p-4 border border-primary-blue-200 rounded-md"
           />
 
-          <div className="flex items-center bg-neutral-grey-200 w-max px-4 py-2 rounded-md">
+          <div className="flex items-center bg-neutral-grey-200 w-max px-4 py-2 rounded-md hover:bg-slate-500 hover:text-white transition-colors duration-200">
             <button onClick={() => setIsEditReplyModalShown(false)}>
               Close
             </button>
@@ -72,7 +71,7 @@ const EditReplyModal = ({
 
           <div className="flex items-center justify-end">
             <button
-              className="bg-primary-blue-400 text-white font-medium px-7 py-2 rounded-md"
+              className="bg-primary-blue-400 text-white font-medium px-4 py-2 rounded-md hover:opacity-50"
               onClick={() => sendCommentHandler(reply.id)}
             >
               UPDATE

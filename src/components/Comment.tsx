@@ -57,17 +57,17 @@ const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
         </div>
 
         {comment.user.username === currentUser.username ? (
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 sm:justify-end">
             <button
               onClick={deleteCommentHandler}
-              className="flex items-center gap-2 font-bold-7"
+              className="flex items-center gap-2 font-bold-7 hover:opacity-50 transition-colors duration-200"
             >
               <img src="./images/icon-delete.svg" alt="" />
               <span className="text-primary-red-400">Delete</span>
             </button>
             <button
               onClick={() => setisEditCommentModalShown(true)}
-              className="flex items-center gap-2 font-bold-7"
+              className="flex items-center gap-2 font-bold-7 hover:opacity-50 transition-colors duration-200"
             >
               <img src="./images/icon-edit.svg" alt="" />
               <span className="text-primary-blue-400">Edit</span>
@@ -75,7 +75,7 @@ const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
           </div>
         ) : (
           <div className="flex items-center justify-end">
-            <button className="flex items-center gap-2 font-bold-7">
+            <button className="flex items-center gap-2 font-bold-7 hover:opacity-50 transition-colors duration-200">
               <img src="./images/icon-reply.svg" alt="" />
               <span className=" text-primary-blue-400">Reply</span>
             </button>
@@ -84,10 +84,9 @@ const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
       </div>
 
       {replies?.length !== 0 ? (
-        <div className="space-y-2 border-l-2 pl-4">
+        <div className="space-y-2 border-l-2 pl-4 sm:ml-4">
           {replies?.map((reply) => (
             <Reply
-              setisEditCommentModalShown={setisEditCommentModalShown}
               setReplies={setReplies}
               currentUser={currentUser}
               reply={reply}
