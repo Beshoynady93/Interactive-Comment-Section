@@ -21,9 +21,7 @@ const CommentsSection = () => {
             />
           ))}
         </div>
-        <div className="bg-white mt-4 px-4 py-2">
-          <AddComment setComment={setcomments} currentUser={currentUser} />
-        </div>
+        <AddComment setComment={setcomments} currentUser={currentUser} />
       </section>
     </>
   );

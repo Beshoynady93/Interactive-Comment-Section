@@ -21,6 +21,10 @@ export default {
         medium: 500,
         'bold-7': 700,
       },
+      gridTemplateColumns: {
+        'comments-replies-md': 'max-content auto auto',
+        'add-comment-section': 'max-content auto max-content',
+      },
     },
   },
   plugins: [],
