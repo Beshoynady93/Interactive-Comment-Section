@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useState } from 'react';
 import { userType, commentType } from '../types/types';
 import SendButton from './buttons/SendButton';
 
@@ -8,15 +8,15 @@ type addCommentPropsType = {
 };
 
 const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [commentContent, setcommentContent] = useState('');
 
-  const sendCommentHandler = () => {
-    if (!textareaRef.current?.value) return;
+  const sendCommentHandler = (commentContent: string) => {
+    if (!commentContent || commentContent.trim().length === 0) return;
     setComment((comments: commentType[]) => [
       ...comments,
       {
         id: new Date().getTime(),
-        content: textareaRef.current?.value ? textareaRef.current?.value : '',
+        content: commentContent,
         createdAt: `${new Date().getDate()}-${
           new Date().getMonth() + 1
         }-${new Date().getFullYear()}`,
@@ -28,15 +28,16 @@ const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
         replies: [],
       },
     ]);
-    // textareaRef.current.value = '';
+    setcommentContent('');
   };
 
   return (
     <>
       <textarea
         name="add-comment"
-        ref={textareaRef}
-        id=""
+        value={commentContent}
+        onChange={(e) => setcommentContent(e.target.value)}
+        id="add-comment"
         // cols={30}
         rows={3}
         placeholder="Add a comment ..."
@@ -44,7 +45,10 @@ const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
       />
       <div className="flex justify-between items-center space-y-2">
         <img className="w-10" src={currentUser.image.webp} alt="" />
-        <SendButton sendCommentHandler={sendCommentHandler} />
+        <SendButton
+          sendCommentHandler={sendCommentHandler}
+          commentContent={commentContent}
+        />
       </div>
     </>
   );

@@ -20,7 +20,6 @@ const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
 
   const deleteCommentHandler = () => {
     setisDeleteCommentModalShown(true);
-    console.log(comment.id);
   };
 
   return (
@@ -105,6 +104,7 @@ const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
         comment={comment}
         isEditCommentModalShown={isEditCommentModalShown}
         setisEditCommentModalShown={setisEditCommentModalShown}
+        setcomments={setcomments}
       />
 
       <DeleteCommentModal

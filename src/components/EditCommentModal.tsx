@@ -1,11 +1,12 @@
+import { useState } from 'react';
 import { commentType, userType } from '../types/types';
-import SendButton from './buttons/SendButton';
 
 type editCommentModal = {
   isEditCommentModalShown: boolean;
   comment: commentType;
   currentUser: userType;
   setisEditCommentModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  setcomments: React.Dispatch<React.SetStateAction<commentType[]>>;
 };
 
 const EditCommentModal = ({
@@ -13,8 +14,34 @@ const EditCommentModal = ({
   comment,
   currentUser,
   setisEditCommentModalShown,
+  setcomments,
 }: editCommentModal) => {
-  const sendCommentHandler = () => {};
+  const [commentEditedText, setcommentEditedText] = useState(comment.content);
+
+  const editedCommentTextHandler = (editedText: string) => {
+    setcommentEditedText(editedText);
+  };
+
+  const sendCommentHandler = (commentID: number) => {
+    if (!commentEditedText || commentEditedText.trim().length === 0) return;
+    setcomments((comments) => {
+      const commentToEdit = comments.find(
+        (comment) => comment.id === commentID
+      );
+
+      const commentToEditIndex = comments.findIndex(
+        (comment) => comment.id === commentID
+      );
+
+      if (!commentToEdit) return comments;
+      commentToEdit.content = commentEditedText;
+      comments[commentToEditIndex] = commentToEdit;
+      return comments;
+    });
+
+    setisEditCommentModalShown(false);
+  };
+
   return (
     <div
       className={`w-full h-full mt-0 top-0 left-0 bg-black bg-opacity-40 fixed z-10  items-center justify-center ${
@@ -33,6 +60,8 @@ const EditCommentModal = ({
 
           <textarea
             defaultValue={comment.content}
+            onChange={(e) => editedCommentTextHandler(e.target.value)}
+            value={commentEditedText}
             className="text-neutral-blue-200 col-span-2 resize-none p-4 border border-primary-blue-200 rounded-md"
           />
 
@@ -43,7 +72,12 @@ const EditCommentModal = ({
           </div>
 
           <div className="flex items-center justify-end">
-            <SendButton sendCommentHandler={sendCommentHandler} />
+            <button
+              className="bg-primary-blue-400 text-white font-medium px-7 py-2 rounded-md"
+              onClick={() => sendCommentHandler(comment.id)}
+            >
+              UPDATE
+            </button>
           </div>
         </div>
       </div>

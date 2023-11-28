@@ -23,7 +23,6 @@ const DeleteCommentModal = ({
     );
 
     setisDeleteCommentModalShown(false);
-    console.log(commentID);
   };
 
   return (
