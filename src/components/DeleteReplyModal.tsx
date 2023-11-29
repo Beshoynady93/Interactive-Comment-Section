@@ -1,26 +1,44 @@
-import { replyType } from '../types/types';
+import { commentType, replyType } from '../types/types';
 
 type deleteReplyModalType = {
   isDeleteReplyModalShown: boolean;
   setIsDeleteReplyModalShown: React.Dispatch<React.SetStateAction<boolean>>;
   setReplies: React.Dispatch<React.SetStateAction<replyType[] | undefined>>;
   replyIdToDelete: number | undefined;
+  comments: commentType[];
+  setcomments: React.Dispatch<React.SetStateAction<commentType[]>>;
+  comment: commentType;
 };
 
 const DeleteReplyModal = ({
   setIsDeleteReplyModalShown,
   isDeleteReplyModalShown,
   replyIdToDelete,
-  setReplies,
+  comments,
+  setcomments,
+  comment,
 }: deleteReplyModalType) => {
   const cancelDeleteCommentHalndler = () => {
     setIsDeleteReplyModalShown(false);
   };
 
   const deleteReplyHandler = () => {
-    setReplies((replies) =>
-      replies?.filter((reply) => reply.id !== replyIdToDelete)
+    const commentID = comment.id;
+    const commentIndex = comments.findIndex(
+      (comment) => comment.id === commentID
     );
+
+    if (!comments[commentIndex].replies) return;
+
+    const replyIndex = comments[commentIndex].replies?.findIndex(
+      (reply) => reply.id === replyIdToDelete
+    );
+
+    if (replyIndex === undefined) return;
+
+    const newComments = [...comments];
+    newComments[commentIndex].replies?.splice(replyIndex, 1);
+    setcomments(newComments);
 
     setIsDeleteReplyModalShown(false);
   };

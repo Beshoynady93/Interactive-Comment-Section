@@ -1,4 +1,4 @@
-import { replyType, userType } from '../types/types';
+import { commentType, replyType, userType } from '../types/types';
 import DeleteReplyModal from './DeleteReplyModal';
 import { useState } from 'react';
 import EditReplyModal from './EditReplyModal';
@@ -7,9 +7,19 @@ type replyPropsType = {
   reply: replyType;
   currentUser: userType;
   setReplies: React.Dispatch<React.SetStateAction<replyType[] | undefined>>;
+  comments: commentType[];
+  setcomments: React.Dispatch<React.SetStateAction<commentType[]>>;
+  comment: commentType;
 };
 
-const Reply = ({ reply, currentUser, setReplies }: replyPropsType) => {
+const Reply = ({
+  reply,
+  currentUser,
+  setReplies,
+  comments,
+  setcomments,
+  comment,
+}: replyPropsType) => {
   const [isDeleteReplyModalShown, setIsDeleteReplyModalShown] = useState(false);
   const [isEditReplyModalShown, setIsEditReplyModalShown] = useState(false);
 
@@ -83,6 +93,9 @@ const Reply = ({ reply, currentUser, setReplies }: replyPropsType) => {
         isDeleteReplyModalShown={isDeleteReplyModalShown}
         setIsDeleteReplyModalShown={setIsDeleteReplyModalShown}
         setReplies={setReplies}
+        comments={comments}
+        setcomments={setcomments}
+        comment={comment}
       />
 
       <EditReplyModal

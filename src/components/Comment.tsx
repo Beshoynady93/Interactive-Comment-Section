@@ -1,4 +1,5 @@
 import { commentType, userType, replyType } from '../types/types';
+import AddReply from './AddReply';
 import DeleteCommentModal from './DeleteCommentModel';
 import EditCommentModal from './EditCommentModal';
 import Reply from './Reply';
@@ -8,15 +9,22 @@ type commentPropsType = {
   comment: commentType;
   currentUser: userType;
   setcomments: React.Dispatch<React.SetStateAction<commentType[]>>;
+  comments: commentType[];
 };
 
-const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
+const Comment = ({
+  comment,
+  currentUser,
+  setcomments,
+  comments,
+}: commentPropsType) => {
   const [replies, setReplies] = useState<replyType[] | undefined>(
     comment.replies
   );
   const [isDeleteCommentModalShown, setisDeleteCommentModalShown] =
     useState(false);
   const [isEditCommentModalShown, setisEditCommentModalShown] = useState(false);
+  const [isReplyModalShown, setisReplyModalShown] = useState(false);
 
   const deleteCommentHandler = () => {
     setisDeleteCommentModalShown(true);
@@ -75,13 +83,25 @@ const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
           </div>
         ) : (
           <div className="flex items-center justify-end md:col-start-4 md:row-start-1">
-            <button className="flex items-center gap-2 font-bold-7 hover:opacity-50 transition-colors duration-200">
+            <button
+              onClick={() => setisReplyModalShown(true)}
+              className="flex items-center gap-2 font-bold-7 hover:opacity-50 transition-colors duration-200"
+            >
               <img src="./images/icon-reply.svg" alt="" />
               <span className=" text-primary-blue-400">Reply</span>
             </button>
           </div>
         )}
       </div>
+
+      <AddReply
+        comment={comment}
+        currentUser={currentUser}
+        isReplyModalShown={isReplyModalShown}
+        setisReplyModalShown={setisReplyModalShown}
+        setcomments={setcomments}
+        comments={comments}
+      />
 
       {replies?.length !== 0 ? (
         <div className="space-y-2 border-l-2 pl-4 sm:ml-4">
@@ -90,6 +110,9 @@ const Comment = ({ comment, currentUser, setcomments }: commentPropsType) => {
               setReplies={setReplies}
               currentUser={currentUser}
               reply={reply}
+              comments={comments}
+              setcomments={setcomments}
+              comment={comment}
               key={reply.id}
             />
           ))}

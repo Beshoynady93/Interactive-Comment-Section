@@ -18,6 +18,7 @@ const CommentsSection = () => {
               comment={comment}
               setcomments={setcomments}
               key={comment.id}
+              comments={comments}
             />
           ))}
         </div>
