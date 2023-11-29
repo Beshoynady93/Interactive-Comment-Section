@@ -113,6 +113,7 @@ const Comment = ({
               comments={comments}
               setcomments={setcomments}
               comment={comment}
+              setisReplyModalShown={setisReplyModalShown}
               key={reply.id}
             />
           ))}

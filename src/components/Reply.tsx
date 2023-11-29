@@ -10,6 +10,7 @@ type replyPropsType = {
   comments: commentType[];
   setcomments: React.Dispatch<React.SetStateAction<commentType[]>>;
   comment: commentType;
+  setisReplyModalShown: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Reply = ({
@@ -19,6 +20,7 @@ const Reply = ({
   comments,
   setcomments,
   comment,
+  setisReplyModalShown,
 }: replyPropsType) => {
   const [isDeleteReplyModalShown, setIsDeleteReplyModalShown] = useState(false);
   const [isEditReplyModalShown, setIsEditReplyModalShown] = useState(false);
@@ -80,7 +82,10 @@ const Reply = ({
           </div>
         ) : (
           <div className="flex items-center justify-end hover:opacity-50 md:col-start-4 md:row-start-1">
-            <button className="flex items-center gap-2 font-bold-7">
+            <button
+              onClick={() => setisReplyModalShown(true)}
+              className="flex items-center gap-2 font-bold-7"
+            >
               <img src="./images/icon-reply.svg" alt="" />
               <span className=" text-primary-blue-400">Reply</span>
             </button>

@@ -47,7 +47,10 @@ const EditReplyModal = ({
         isEditReplyModalShown ? 'flex' : 'hidden'
       }`}
     >
-      <div className="bg-white w-11/12 px-2 rounded-md space-y-1">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="bg-white w-11/12 px-2 rounded-md space-y-1"
+      >
         <div className="bg-white p-4 rounded-md grid grid-cols-2 gap-y-4 shadow-sm">
           <div className="flex gap-4 items-center col-span-2">
             <img className="w-10" src={currentUser.image.webp} alt="" />
@@ -58,6 +61,8 @@ const EditReplyModal = ({
           </div>
 
           <textarea
+            name="edit-reply"
+            id="edit-reply"
             onChange={(e) => editedReplyTextHandler(e.target.value)}
             value={replyEditedText}
             className="text-neutral-blue-200 col-span-2 resize-none p-4 border border-primary-blue-200 rounded-md"
@@ -78,7 +83,7 @@ const EditReplyModal = ({
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
   );
 };

@@ -32,12 +32,16 @@ const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 items-end bg-white mt-4 px-4 py-2 md:grid md:grid-cols-add-comment-section md:items-start md:gap-4">
+    <form
+      onSubmit={(e) => e.preventDefault()}
+      id="add-comment-id"
+      className="grid grid-cols-2 gap-4 items-end bg-white mt-4 px-4 py-2 md:grid md:grid-cols-add-comment-section md:items-start md:gap-4"
+    >
       <textarea
         name="add-comment"
         value={commentContent}
         onChange={(e) => setcommentContent(e.target.value)}
-        id="add-comment"
+        id="add-comment-id"
         // cols={30}
         rows={3}
         placeholder="Add a comment ..."
@@ -52,9 +56,7 @@ const AddComment = ({ currentUser, setComment }: addCommentPropsType) => {
         sendCommentHandler={sendCommentHandler}
         commentContent={commentContent}
       />
-      {/* <div className="flex justify-between items-center space-y-2">
-      </div> */}
-    </div>
+    </form>
   );
 };
 

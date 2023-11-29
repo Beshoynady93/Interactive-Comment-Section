@@ -43,7 +43,8 @@ const EditCommentModal = ({
   };
 
   return (
-    <div
+    <form
+      onSubmit={(e) => e.preventDefault()}
       className={`w-full h-full mt-0 top-0 left-0 bg-black bg-opacity-40 fixed z-10  items-center justify-center ${
         isEditCommentModalShown ? 'flex' : 'hidden'
       }`}
@@ -59,6 +60,8 @@ const EditCommentModal = ({
           </div>
 
           <textarea
+            name="edit-comment"
+            id="edit-comment"
             onChange={(e) => editedCommentTextHandler(e.target.value)}
             value={commentEditedText}
             className="text-neutral-blue-200 col-span-2 resize-none p-4 border border-primary-blue-200 rounded-md"
@@ -80,7 +83,7 @@ const EditCommentModal = ({
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

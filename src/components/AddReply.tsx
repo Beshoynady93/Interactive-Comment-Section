@@ -18,10 +18,21 @@ const AddReply = ({
   setcomments,
   comments,
 }: AddReplyPropsType) => {
-  const [replyContent, setreplyContent] = useState('');
+  const [replyContent, setreplyContent] = useState(
+    `@${comment.user.username}, `
+  );
 
   const replyToCommentHandler = (commentID: number) => {
-    if (!replyContent || replyContent.trim().length === 0) return;
+    if (
+      !replyContent ||
+      replyContent.trim().length === 0 ||
+      (replyContent.startsWith(`@${comment.user.username}, `) &&
+        replyContent.slice(comment.user.username.length + 2).trim().length ===
+          0)
+    )
+      return;
+
+    console.log(replyContent.startsWith(`@${comment.user.username}, `));
 
     const commentToReplyIndex = comments.findIndex(
       (comment) => comment.id === commentID
@@ -42,25 +53,28 @@ const AddReply = ({
     newComments[commentToReplyIndex].replies?.push(newReply);
 
     setcomments(newComments);
-    setreplyContent('');
+    setreplyContent(`@${comment.user.username}, `);
     setisReplyModalShown(false);
   };
 
   return (
-    <div
+    <form
+      onSubmit={(e) => e.preventDefault()}
       className={`grid grid-cols-2 gap-4 items-end bg-white mt-4 px-4 py-2 md:grid-cols-add-comment-section md:items-start md:gap-4 ${
         isReplyModalShown ? 'grid' : 'hidden'
       }`}
+      id="add-reply"
     >
       <textarea
-        name="add-comment"
+        name="add-reply"
         value={replyContent}
         onChange={(e) => setreplyContent(e.target.value)}
-        id="add-comment"
+        id="add-reply"
         rows={3}
-        placeholder="Add a reply ..."
+        placeholder=""
         className="col-span-2 resize-none w-full p-4 border border-neutral-grey-400 text-neutral-blue-400 md:col-start-2 md:row-start-1 md:col-span-1"
       />
+
       <img
         className="w-10 md:col-start-1 md:row-start-1"
         src={currentUser.image.webp}
@@ -74,9 +88,14 @@ const AddReply = ({
         >
           REPLY
         </button>
-        <button onClick={() => setisReplyModalShown(false)}>Cancle</button>
+        <button
+          onClick={() => setisReplyModalShown(false)}
+          className="font-bold-7 underline text-slate-600"
+        >
+          Cancle
+        </button>
       </div>
-    </div>
+    </form>
   );
 };
 

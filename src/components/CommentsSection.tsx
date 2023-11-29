@@ -10,7 +10,7 @@ const CommentsSection = () => {
 
   return (
     <>
-      <section className="max-w-sm mx-auto px-4 py-8 sm:max-w-md md:max-w-2xl">
+      <section className="max-w-sm mx-auto px-4 py-8 sm:max-w-md md:max-w-3xl">
         <div className="space-y-4">
           {comments.map((comment) => (
             <Comment
