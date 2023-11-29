@@ -32,8 +32,6 @@ const AddReply = ({
     )
       return;
 
-    console.log(replyContent.startsWith(`@${comment.user.username}, `));
-
     const commentToReplyIndex = comments.findIndex(
       (comment) => comment.id === commentID
     );
@@ -44,7 +42,7 @@ const AddReply = ({
       createdAt: `${new Date().getDate()}-${
         new Date().getMonth() + 1
       }-${new Date().getFullYear()}`,
-      score: 4,
+      score: 0,
       replyingTo: comment.user.username,
       user: currentUser,
     };

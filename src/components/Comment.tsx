@@ -25,9 +25,38 @@ const Comment = ({
     useState(false);
   const [isEditCommentModalShown, setisEditCommentModalShown] = useState(false);
   const [isReplyModalShown, setisReplyModalShown] = useState(false);
+  const [commentScore] = useState(comment.score);
 
   const deleteCommentHandler = () => {
     setisDeleteCommentModalShown(true);
+  };
+
+  const incrementCommentScore = (commentID: number) => {
+    const commentIndex = comments.findIndex(
+      (comment) => comment.id === commentID
+    );
+
+    const newComments = [...comments];
+
+    if (newComments[commentIndex].score >= commentScore + 1) return;
+
+    newComments[commentIndex].score++;
+
+    setcomments(newComments);
+  };
+
+  const decrementCommentScore = (commentID: number) => {
+    const commentIndex = comments.findIndex(
+      (comment) => comment.id === commentID
+    );
+
+    const newComments = [...comments];
+
+    if (newComments[commentIndex].score <= commentScore - 1) return;
+
+    newComments[commentIndex].score--;
+
+    setcomments(newComments);
   };
 
   return (
@@ -53,13 +82,19 @@ const Comment = ({
         </div>
 
         <div className="flex items-center md:flex-col md:justify-between bg-neutral-grey-200 w-max px-4 py-2 rounded-md md:col-start-1 md:row-start-1 md:row-span-2 md:py-8 md:px-1 md:rounded-full">
-          <button className="p-2">
+          <button
+            className="p-2"
+            onClick={() => incrementCommentScore(comment.id)}
+          >
             <img src="./images/icon-plus.svg" alt="" />
           </button>
           <span className="text-primary-blue-400 font-bold-7 mx-2">
             {comment.score}
           </span>
-          <button className="p-2">
+          <button
+            className="p-2"
+            onClick={() => decrementCommentScore(comment.id)}
+          >
             <img src="./images/icon-minus.svg" alt="" />
           </button>
         </div>
@@ -114,6 +149,7 @@ const Comment = ({
               setcomments={setcomments}
               comment={comment}
               setisReplyModalShown={setisReplyModalShown}
+              replies={replies}
               key={reply.id}
             />
           ))}

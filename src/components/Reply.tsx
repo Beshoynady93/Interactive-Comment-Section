@@ -11,6 +11,7 @@ type replyPropsType = {
   setcomments: React.Dispatch<React.SetStateAction<commentType[]>>;
   comment: commentType;
   setisReplyModalShown: React.Dispatch<React.SetStateAction<boolean>>;
+  replies: replyType[];
 };
 
 const Reply = ({
@@ -24,6 +25,55 @@ const Reply = ({
 }: replyPropsType) => {
   const [isDeleteReplyModalShown, setIsDeleteReplyModalShown] = useState(false);
   const [isEditReplyModalShown, setIsEditReplyModalShown] = useState(false);
+  const [replyScore] = useState(reply.score);
+
+  const incrementReplyScore = (replyID: number) => {
+    const commentID = comment.id;
+    const commentIndex = comments.findIndex(
+      (comment) => comment.id === commentID
+    );
+
+    const replyIndex = comments[commentIndex].replies?.findIndex(
+      (reply) => reply.id === replyID
+    );
+
+    const newComments = [...comments];
+
+    if (replyIndex === undefined) return;
+
+    if (!newComments[commentIndex].replies) return;
+
+    if (newComments[commentIndex].replies[replyIndex].score >= replyScore + 1)
+      return;
+
+    newComments[commentIndex].replies[replyIndex].score++;
+
+    setcomments(newComments);
+  };
+
+  const decrementReplyScore = (replyID: number) => {
+    const commentID = comment.id;
+
+    const commentIndex = comments.findIndex(
+      (comment) => comment.id === commentID
+    );
+
+    const replyIndex = comments[commentIndex].replies?.findIndex(
+      (reply) => reply.id === replyID
+    );
+
+    const newComments = [...comments];
+
+    if (replyIndex === undefined) return;
+    if (newComments[commentIndex].replies === undefined) return;
+
+    if (newComments[commentIndex].replies[replyIndex].score <= replyScore - 1)
+      return;
+
+    newComments[commentIndex].replies[replyIndex].score--;
+
+    setcomments(newComments);
+  };
 
   const deleteCommentHandler = () => {
     setIsDeleteReplyModalShown(true);
@@ -52,13 +102,13 @@ const Reply = ({
         </div>
 
         <div className="flex items-center md:flex-col md:justify-between bg-neutral-grey-200 w-max px-4 py-2 rounded-md md:col-start-1 md:row-start-1 md:row-span-2 md:py-8 md:px-1 md:rounded-full">
-          <button className="p-2">
+          <button className="p-2" onClick={() => incrementReplyScore(reply.id)}>
             <img src="./images/icon-plus.svg" alt="" />
           </button>
           <span className="text-primary-blue-400 font-bold-7 mx-2">
             {reply.score}
           </span>
-          <button className="p-2">
+          <button className="p-2" onClick={() => decrementReplyScore(reply.id)}>
             <img src="./images/icon-minus.svg" alt="" />
           </button>
         </div>
